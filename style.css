@@ -1,0 +1,15 @@
+.header ul {
+    list-style: none;
+    text-align: right;
+}
+.header li {
+    display: inline;
+    margin: 1em;
+}
+.title {
+    text-align: center;
+}
+#mapid { 
+	width: 800px;
+	height: 600px;
+}

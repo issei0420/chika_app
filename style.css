@@ -12,4 +12,9 @@
 #mapid { 
 	width: 800px;
 	height: 600px;
+    float: left;
+}
+#place {
+    background: red;
+    float: left;
 }

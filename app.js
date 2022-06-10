@@ -13,7 +13,6 @@ window.onload = ()=> {
 	map.on('click', e=>{ 
 		const lat = e.latlng.lat;
 		const lng = e.latlng.lng;
-		alert("lat: " + lat + ",lng: " + lng);
 		getPlace(lat, lng);
 	});
 }
@@ -27,7 +26,10 @@ function getPlace (lat, lng) {
 
 	request.onload = function () {
 		const data = this.response;
-		console.log(data);
+		let new_element = document.createElement('p');
+		const thePlace = document.getElementById('place');
+		thePlace.textContent = `市町村名: ${data}`;
+		thePlace.appendChild(new_element);		
 	}
 	request.send();
 }

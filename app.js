@@ -19,17 +19,21 @@ window.onload = ()=> {
 
 // 市町村名を取得
 function getPlace (lat, lng) {
-	const request = new XMLHttpRequest();
-
-	request.open('GET', 'http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=135.0&y=35.0', true);
-	request.responseType = 'json';
-
-	request.onload = function () {
-		const data = this.response;
-		let new_element = document.createElement('p');
-		const thePlace = document.getElementById('place');
-		thePlace.textContent = `市町村名: ${data}`;
-		thePlace.appendChild(new_element);		
+	async function callApi() {
+		const res = await fetch('http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=135.0&y=35.0');
+		const place = await res.json();
+		console.log(place);
 	}
-	request.send();
+	callApi();
+	// const request = new XMLHttpRequest();
+	// request.open('GET', 'http://geoapi.heartrails.com/api/xml?method=searchByGeoLocation&x=135.0&y=35.0', true);
+	// request.onload = function () {
+	// 	const data = this.response;
+	// 	console.log(data);
+	// 	let new_element = document.createElement('p');
+	// 	const thePlace = document.getElementById('place');
+	// 	thePlace.textContent = `市町村名: ${data}`;
+	// 	thePlace.appendChild(new_element);		
+	// }
+	// request.send();
 }

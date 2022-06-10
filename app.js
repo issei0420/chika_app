@@ -14,5 +14,20 @@ window.onload = ()=> {
 		const lat = e.latlng.lat;
 		const lng = e.latlng.lng;
 		alert("lat: " + lat + ",lng: " + lng);
+		getPlace(lat, lng);
 	});
+}
+
+// 市町村名を取得
+function getPlace (lat, lng) {
+	const request = new XMLHttpRequest();
+
+	request.open('GET', 'http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=135.0&y=35.0', true);
+	request.responseType = 'json';
+
+	request.onload = function () {
+		const data = this.response;
+		console.log(data);
+	}
+	request.send();
 }

@@ -22,7 +22,12 @@ function getPlace (lat, lng) {
 	async function callApi() {
 		const res = await fetch('http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=135.0&y=35.0');
 		const place = await res.json();
-		console.log(place);
+		const prefecture = place['response']['location'][0]['prefecture'];
+		const city = place['response']['location'][0]['city'];
+		console.log(place['response']['location'][0]);
+		console.log(prefecture);
+		console.log(city);
+
 	}
 	callApi();
 	// const request = new XMLHttpRequest();

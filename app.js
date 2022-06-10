@@ -19,26 +19,21 @@ window.onload = ()=> {
 
 // 市町村名を取得
 function getPlace (lat, lng) {
+	let prefecture;
+	let city;
 	async function callApi() {
+		// 土地情報を取得 (Heart)
 		const res = await fetch('http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=135.0&y=35.0');
 		const place = await res.json();
-		const prefecture = place['response']['location'][0]['prefecture'];
-		const city = place['response']['location'][0]['city'];
+		// 県と市を抽出
+	    prefecture = place['response']['location'][0]['prefecture'];
+	    city = place['response']['location'][0]['city'];
 		console.log(place['response']['location'][0]);
 		console.log(prefecture);
 		console.log(city);
-
+		// 画面表示
+	    const thePlace = document.getElementById('input-place');
+		thePlace.value = `${prefecture} ${city}`;
 	}
 	callApi();
-	// const request = new XMLHttpRequest();
-	// request.open('GET', 'http://geoapi.heartrails.com/api/xml?method=searchByGeoLocation&x=135.0&y=35.0', true);
-	// request.onload = function () {
-	// 	const data = this.response;
-	// 	console.log(data);
-	// 	let new_element = document.createElement('p');
-	// 	const thePlace = document.getElementById('place');
-	// 	thePlace.textContent = `市町村名: ${data}`;
-	// 	thePlace.appendChild(new_element);		
-	// }
-	// request.send();
 }

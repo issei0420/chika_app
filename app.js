@@ -28,12 +28,21 @@ window.onload = ()=> {
 // 市町村名を取得
 function getPlace (lat, lng) {
 	async function callApi() {
-		// 土地情報を取得 (Heart)
+		// 土地情報を取得 (Heart API)
 		const res = await fetch(`http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=${lng}.0&y=${lat}`);
 		const place = await res.json();
 		// 県と市を抽出
 	    prefecture = place['response']['location'][0]['prefecture'];
 	    city = place['response']['location'][0]['city'];
+		let idx = 0;
+		// 郡名を削除
+		for (let i in city) {
+			console.log(city[i]);
+			if (city[i] == '郡') {
+				city = city.slice(Number(i) + 1);
+				break;
+			}
+		}
 		// 画面表示
 	    const thePlace = document.getElementById('input-place');
 		thePlace.value = `${prefecture} ${city}`;
@@ -41,6 +50,7 @@ function getPlace (lat, lng) {
 	callApi();
 }
 
+// 地価を取得
 function getPrice() {
 	const prefectureCode = prefectureCodes[prefecture];
 	async function callApi() {
@@ -53,7 +63,8 @@ function getPrice() {
 			if (cityCodes[i]['name'] == city) {
 				code = cityCodes[i]['id'];
 			}
-		}	
+		}
+		console.log(code);
 	}
 	callApi();
 }

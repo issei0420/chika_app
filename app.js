@@ -9,12 +9,17 @@ window.onload = ()=> {
 			minZoom: 5, 
 			maxZoom: 18, 
 		}).addTo(map);
+	// イベントハンドラ設定
 	// クリック時の緯度・経度取得
 	map.on('click', e=>{ 
 		const lat = e.latlng.lat;
 		const lng = e.latlng.lng;
 		getPlace(lat, lng);
 	});
+	document.getElementById('send').onclick = () => {
+		saveAction();
+		return false;
+	}
 }
 
 // 市町村名を取得
@@ -33,4 +38,8 @@ function getPlace (lat, lng) {
 		thePlace.value = `${prefecture} ${city}`;
 	}
 	callApi();
+}
+
+function saveAction() {
+	console.log('test');
 }

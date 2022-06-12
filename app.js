@@ -42,20 +42,18 @@ function getPlace (lat, lng) {
 }
 
 function getPrice() {
-	console.log(prefecture);
+	const prefectureCode = prefectureCodes[prefecture];
 	async function callApi() {
-		const res = await fetch('https://www.land.mlit.go.jp/webland/api/CitySearch?area=13');
+		const res = await fetch(`https://www.land.mlit.go.jp/webland/api/CitySearch?area=${prefectureCode}`);
 		const resJson = await res.json();
+		console.log(resJson);
 		const cityCodes = resJson['data'];
-		console.log(cityCodes);
 		let code;
 		for (let i in cityCodes) {
-			console.log(cityCodes[i]);
 			if (cityCodes[i]['name'] == city) {
-				code = cityCodes['id'];
+				code = cityCodes[i]['id'];
 			}
 		}	
-		console.log(city);
 	}
 	callApi();
 }

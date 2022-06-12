@@ -1,3 +1,6 @@
+let prefecture;
+let city;
+
 // 初期中心緯度経度
 const init_center = [35.69, 139.695];
 // 初期地図表示実行イベント登録
@@ -17,15 +20,13 @@ window.onload = ()=> {
 		getPlace(lat, lng);
 	});
 	document.getElementById('send').onclick = () => {
-		saveAction();
+		getPrice();
 		return false;
 	}
 }
 
 // 市町村名を取得
 function getPlace (lat, lng) {
-	let prefecture;
-	let city;
 	async function callApi() {
 		// 土地情報を取得 (Heart)
 		const res = await fetch(`http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x=${lng}.0&y=${lat}`);
@@ -40,6 +41,21 @@ function getPlace (lat, lng) {
 	callApi();
 }
 
-function saveAction() {
-	console.log('test');
+function getPrice() {
+	console.log(prefecture);
+	async function callApi() {
+		const res = await fetch('https://www.land.mlit.go.jp/webland/api/CitySearch?area=13');
+		const resJson = await res.json();
+		const cityCodes = resJson['data'];
+		console.log(cityCodes);
+		let code;
+		for (let i in cityCodes) {
+			console.log(cityCodes[i]);
+			if (cityCodes[i]['name'] == city) {
+				code = cityCodes['id'];
+			}
+		}	
+		console.log(city);
+	}
+	callApi();
 }

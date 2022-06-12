@@ -37,7 +37,6 @@ function getPlace (lat, lng) {
 		let idx = 0;
 		// 郡名を削除
 		for (let i in city) {
-			console.log(city[i]);
 			if (city[i] == '郡') {
 				city = city.slice(Number(i) + 1);
 				break;
@@ -56,7 +55,6 @@ function getPrice() {
 	async function callApi() {
 		const res = await fetch(`https://www.land.mlit.go.jp/webland/api/CitySearch?area=${prefectureCode}`);
 		const resJson = await res.json();
-		console.log(resJson);
 		const cityCodes = resJson['data'];
 		let code;
 		for (let i in cityCodes) {
@@ -64,7 +62,20 @@ function getPrice() {
 				code = cityCodes[i]['id'];
 			}
 		}
-		console.log(code);
+		const res2 = await fetch(`https://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20151&to=20152&city=${code}`);
+		const res2Json = await res2.json();
+		let sumPrice = 0;
+		let getNumber = 0;
+		for (i in res2Json['data']) {
+			if ('PricePerUnit' in res2Json['data'][i]) {
+				sumPrice += Number(res2Json['data']['PricePerUnit']);
+				getNumber += 1;
+			}			
+		}
+		let pricePerUnit  = sumPrice / getNumber;
+		console.log(sumPrice);
+		console.log(getNumber);
+		console.log(pricePerUnit);
 	}
 	callApi();
 }

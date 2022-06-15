@@ -66,16 +66,19 @@ function getPrice() {
 		const res2Json = await res2.json();
 		let sumPrice = 0;
 		let getNumber = 0;
-		for (i in res2Json['data']) {
-			if ('PricePerUnit' in res2Json['data'][i]) {
-				sumPrice += Number(res2Json['data']['PricePerUnit']);
+		console.log(res2Json);
+		for (data of res2Json['data']) {
+			if ('PricePerUnit' in data) {
+				sumPrice += Number(data['PricePerUnit']);
 				getNumber += 1;
 			}			
 		}
-		let pricePerUnit  = sumPrice / getNumber;
+		let pricePerUnit  = Math.floor(sumPrice / getNumber);
+		console.log(pricePerUnit);
 		console.log(sumPrice);
 		console.log(getNumber);
-		console.log(pricePerUnit);
+		document.getElementById('getNumber').value = getNumber;
+		document.getElementById('averagePrice').value = pricePerUnit;
 	}
 	callApi();
 }

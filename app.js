@@ -35,9 +35,13 @@ function getPlace (lat, lng) {
 	    prefecture = place['response']['location'][0]['prefecture'];
 	    city = place['response']['location'][0]['city'];
 		let idx = 0;
-		// 郡名を削除
+		// 郡名と市名を削除
 		for (let i in city) {
 			if (city[i] == '郡') {
+				city = city.slice(Number(i) + 1);
+				break;
+			}
+			if (city[i] == '市' && city[Number(i) + 1]){
 				city = city.slice(Number(i) + 1);
 				break;
 			}
@@ -66,7 +70,6 @@ function getPrice() {
 		const res2Json = await res2.json();
 		let sumPrice = 0;
 		let getNumber = 0;
-		console.log(res2Json);
 		for (data of res2Json['data']) {
 			if ('PricePerUnit' in data) {
 				sumPrice += Number(data['PricePerUnit']);
@@ -78,7 +81,7 @@ function getPrice() {
 		console.log(sumPrice);
 		console.log(getNumber);
 		document.getElementById('getNumber').value = getNumber;
-		document.getElementById('averagePrice').value = pricePerUnit;
+		document.getElementById('averagePrice').value = pricePerUnit.toLocaleString();
 	}
 	callApi();
 }
